@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .output {
+            margin-top: 20px;
+        }
+        .error-message {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+    <title>Elasticsearch Query</title>
+</head>
+<body>
+    <h1>Query Elasticsearch</h1>
+    <form id="queryForm">
+        <input type="text" id="queryInput" placeholder="Enter search term" required>
+        <button type="submit">Search</button>
+    </form>
+
+    <div class="output" id="output"></div>
+
+    <script>
+        document.getElementById('queryForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const queryTerm = document.getElementById('queryInput').value;
+
+            // Basic query to Elasticsearch
+            const query = {
+                query: {
+                    match: {
+                        _all: queryTerm
+                    }
+                }
+            };
+
+            // Replace 'http://your-elasticsearch-server:9200/your-index/_search' with your Elasticsearch server URL and index
+            fetch('http://http://fmyemudata002.fm.intel.com:9200/neg3002-suspend-recall-jobs-*/_search', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(query)
+            })
+            .then(response => response.json())
+            .then(data => {
+                const hits = data.hits.hits;
+                let outputHtml = '<h2>Results:</h2><ul>';
+                hits.forEach(hit => {
+                    outputHtml += `<li>${JSON.stringify(hit._source)}</li>`;
+                });
+                outputHtml += '</ul>';
+                document.getElementById('output').innerHTML = outputHtml;
+            })
+            .catch(error => {
+                document.getElementById('output').innerHTML = `<p class="error-message">Error: ${error}</p>`;
+            });
+        });
+    </script>
+</body>
+</html>
