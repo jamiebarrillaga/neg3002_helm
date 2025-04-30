@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .text {
+            margin-bottom: 20px;
+        }
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        select, textarea, input {
+            width: 100%;
+            padding: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            height: 100px; /* Adjust height as needed */
+            resize: vertical; /* Allow vertical resizing */
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .output {
+            margin-top: 20px;
+        }
+        .success-message {
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Report Update on JOBID</h1>
+    <div class="text">
+        <p>
+            Your job <jobid> has exceeded its runtime limit. 
+            Please examine your job to identify and fix the issue to avoid any additional similar failure. 
+            If still under investigation, provide an ETA in the notes of when the problem will be resolved. 
+            If fixed, provide information in the notes on the resolution to the problem. 
+            You can resubmit this form as many times as needed and the database will be updated.
+        </p>
+    </div>
+    <form id="statusForm">
+        <table>
+            <tr>
+                <th>Job ID</th>
+                <th>Status</th>
+                <th>Notes</th>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" name="jobid" placeholder="Enter Job ID" required>
+                </td>
+                <td>
+                    <select name="status" required>
+                        <option value="" disabled selected>Select Status</option>
+                        <option value="under_investigation">Under Investigation</option>
+                        <option value="fixed">Fixed</option>
+                    </select>
+                </td>
+                <td>
+                    <textarea name="notes" placeholder="Enter notes here" required></textarea>
+                </td>
+            </tr>
+        </table>
+        <button type="submit">Submit</button>
+    </form>
+
+    <div class="output" id="output"></div>
+</body>
+</html>
