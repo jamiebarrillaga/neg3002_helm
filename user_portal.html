@@ -50,10 +50,10 @@
     </style>
 </head>
 <body>
-    <h1>Report Update on JOBID</h1>
+    <h1 id="jobid-title">Report Update on <span id="jobid-display"></span></h1>
     <div class="text">
-        <p>
-            Your job <jobid> has exceeded its runtime limit. 
+        <p id="jobid-text">
+            Your job <span id="jobid-display"></span> has exceeded its runtime limit. 
             Please examine your job to identify and fix the issue to avoid any additional similar failure. 
             If still under investigation, provide an ETA in the notes of when the problem will be resolved. 
             If fixed, provide information in the notes on the resolution to the problem. 
@@ -69,7 +69,7 @@
             </tr>
             <tr>
                 <td>
-                    <input type="text" name="jobid" placeholder="Enter Job ID" required>
+                    <input type="text" name="jobid" required>
                 </td>
                 <td>
                     <select name="status" required>
@@ -87,5 +87,25 @@
     </form>
 
     <div class="output" id="output"></div>
+
+    <script>
+        // Function to get query parameters
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Get the jobid from the URL
+        const jobid = getQueryParam('jobid');
+
+        // Display jobid in the title and text
+        if (jobid) {
+            document.getElementById('jobid-title').textContent = `Report Update on ${jobid}`;
+            document.getElementById('jobid-display').textContent = jobid;
+        } else {
+            document.getElementById('jobid-title').textContent = 'Report Update on JOBID';
+            document.getElementById('jobid-display').textContent = 'N/A';
+        }
+    </script>
 </body>
 </html>
